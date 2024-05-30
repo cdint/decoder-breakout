@@ -2,4 +2,6 @@
   (version 7)
   (lib (name "LS7866-S")(type "KiCad")(uri "${KIPRJMOD}/LS7866-S")(options "")(descr ""))
   (lib (name "SM04B-SRSS-TB(LF)(SN)")(type "KiCad")(uri "${KIPRJMOD}/SM04B-SRSS-TB(LF)(SN)")(options "")(descr ""))
+  (lib (name "pcb")(type "KiCad")(uri "C:/cygwin64/home/rebec/lab/decoder-breakout/pcb")(options "")(descr ""))
+  (lib (name "TBL009-254-08GY-2GY")(type "KiCad")(uri "${KIPRJMOD}/TBL009-254-08GY-2GY")(options "")(descr ""))
 )
