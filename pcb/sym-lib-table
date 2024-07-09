@@ -3,4 +3,6 @@
   (lib (name "SM04B-SRSS-TB_LF__SN_")(type "KiCad")(uri "${KIPRJMOD}/SM04B-SRSS-TB(LF)(SN)/SM04B-SRSS-TB_LF__SN_.kicad_sym")(options "")(descr ""))
   (lib (name "LS7866-S")(type "KiCad")(uri "${KIPRJMOD}/LS7866-S/LS7866-S.kicad_sym")(options "")(descr ""))
   (lib (name "TBL009-254-08GY-2GY")(type "KiCad")(uri "${KIPRJMOD}/TBL009-254-08GY-2GY/TBL009-254-08GY-2GY.kicad_sym")(options "")(descr ""))
+  (lib (name "TBL009-254-10GY-2GY")(type "KiCad")(uri "${KIPRJMOD}/TBL009-254-10GY-2GY/TBL009-254-10GY-2GY.kicad_sym")(options "")(descr ""))
+  (lib (name "TBL009-254-14GY-2GY")(type "KiCad")(uri "${KIPRJMOD}/TBL009-254-14GY-2GY/TBL009-254-14GY-2GY.kicad_sym")(options "")(descr ""))
 )
