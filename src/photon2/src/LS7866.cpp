@@ -69,6 +69,7 @@ uint32_t LS7866::read_ODR()
 bool LS7866::write_reg(uint8_t reg_address, uint8_t* data_buff, uint16_t num_bytes)
 {
     HAL_StatusTypeDef ret;
+    // XXX replace with Wire.write()
     ret = HAL_I2C_Mem_Write(i2c_hal, (uint16_t)(device_address<<1), (uint16_t)(reg_address), LS7866_REG_ADD_SIZE, data_buff, num_bytes, HAL_MAX_DELAY);
 
     // check if the transmission is successful

@@ -4,6 +4,8 @@
    License: MIT license
 */
 
+#include <stdint.h>
+
 #ifndef LS7866_h
 #define LS7866_h
 
@@ -150,7 +152,7 @@ class LS7866
 private:
     /* data */
     // HAL handler
-    I2C_HandleTypeDef *i2c_hal;
+    // I2C_HandleTypeDef *i2c_hal;
     uint8_t device_address;
 
     uint8_t data_width = 0; // data can be from 1 to 4 bytes
