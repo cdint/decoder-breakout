@@ -12,9 +12,10 @@
 #include "LS7866_Registers.h"     // Include LS7866 Register Def's
 
 // Define which counters will be used
-#define CNTR_0  0
+//#define CNTR_0  0
 //#define CNTR_1  1
 //#define CNTR_2  2
+#define CNTR_7  7
 
 #define BRD_INT_PIN 2 // INT0 is Pin2 , INT1 is Pin3
 #define CNTR_SIZE 4   // number of bytes to configure counters
@@ -29,9 +30,11 @@
 
 const char fmtStartPromt[] = "APP LS7866-01 Ver %s\r\nI2C Master Address:%d Clock:%06ld\r\n";
 
+/*
 const int ledPin1 = 8;
 const int ledPin2 = 9;
-const int SyncPin = 13;
+// const int SyncPin = 13;
+*/
 
 char msgBuff[64];
 int I2cMstrAddr = 7;
@@ -48,6 +51,7 @@ unsigned long tsPollingInterval = 0;
  * Input    Led Color State
  * Output   Led off, Led Green or Led Red
  */
+/*
 int setLed(int pState){
   switch(pState){
     default:
@@ -67,6 +71,7 @@ int setLed(int pState){
   }
   return pState;
 }
+*/
 
 /* 
  * Function LS7866_Read
@@ -225,7 +230,7 @@ int CounterPoll(byte CntrId, byte DevAddr, byte cntrSize){
   unsigned long cntrVal = 0;
   unsigned long ValLong = 0;
   byte sstrVal = 0;
-  setLed(LED_GRN);
+  // setLed(LED_GRN);
 
   LS7866_Read(DevAddr, CNTR_ADDR, &cntrVal, cntrSize);
   LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);
@@ -233,7 +238,7 @@ int CounterPoll(byte CntrId, byte DevAddr, byte cntrSize){
   sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %08lx SSTR: %02x\n",CntrId, DevAddr, cntrVal, sstrVal);
   Serial.print(msgBuff);
 
-  setLed(LED_OFF);
+  // setLed(LED_OFF);
   return error;
 }
 
@@ -241,13 +246,14 @@ void setup() {
   // put your setup code here, to run once:
   
   // configure pins to drive Tri color led
-  pinMode(ledPin1, OUTPUT);
-  pinMode(ledPin2, OUTPUT);
+  // pinMode(ledPin1, OUTPUT);
+  // pinMode(ledPin2, OUTPUT);
 
-  setLed(LED_RED);            // Show this board is Active
+  // setLed(LED_RED);            // Show this board is Active
   
   // Setup I2C Buss Master  
-  Wire.begin(I2cMstrAddr);    // Set my i2c Master address
+  // Wire.begin(I2cMstrAddr);    // Set my i2c slave address
+  Wire.begin();    // Set i2c master mode
   Wire.setClock(mstrClock);   // Set Buss Speed to Fast Mode 400K
   // Wire.setWireTimeout();      // Setup I2c Timeouts (default)
 
@@ -269,11 +275,14 @@ void setup() {
 #ifdef CNTR_2
   CounterSetup2(2, LS7866_I2C_FIXED_ADDR + 2, CNTR_SIZE);
 #endif
+#ifdef CNTR_7
+  CounterSetup2(7, LS7866_I2C_FIXED_ADDR + 7, CNTR_SIZE);
+#endif
   Serial.print("Setup complete.\r\n");
   Serial.print("Starting Device Polling.\r\n");
 
  
- setLed(LED_OFF);  
+  // setLed(LED_OFF);  
   // extend on time for led
   tsPollingInterval = millis() + 500;
   }
@@ -294,6 +303,9 @@ void loop() {
 #endif
 #ifdef CNTR_2     
     CounterPoll(2, LS7866_I2C_FIXED_ADDR + 2, CNTR_SIZE); 
+#endif
+#ifdef CNTR_7     
+    CounterPoll(7, LS7866_I2C_FIXED_ADDR + 7, CNTR_SIZE); 
 #endif
   //Serial.print("\r\n");   // Add Break line
   }
