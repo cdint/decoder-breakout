@@ -205,6 +205,7 @@ void ChipSetup(byte chipAddress, byte cntrSize){
     byte mcr0;
     LS7866_Read(chipAddress, MCR0_ADDR, &mcr0);
     sprintf(msgBuff, "MCR0 test: %02x\r\n", mcr0);  
+    Serial.print(msgBuff);
 
 }
 
@@ -265,7 +266,7 @@ void setup() {
 
   delay(10000);                // Wait for Serial Monitor to start
 
-  sprintf(msgBuff, "Running program version %s", PRM_VERSION);
+  sprintf(msgBuff, "Running program version %s\r\n", PRM_VERSION);
   Serial.print(msgBuff);
 
   // Setup LS7866 registers
