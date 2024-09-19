@@ -6,7 +6,7 @@
 // Verison Histroy
 //  Ver   Date    Descriptsion
 //  1.00   9/13/23 
-#define PRM_VERSION "1.00"
+#define PRM_VERSION "0.1"
 
 #include <Wire.h>
 #include "LS7866_Registers.h"     // Include LS7866 Register Def's
@@ -15,20 +15,17 @@
 //#define CNTR_0  0
 //#define CNTR_1  1
 //#define CNTR_2  2
-#define CNTR_7  7
+//#define CNTR_7  7
+
+// ADDR_JUMPERS is the address set by the jumpers on the board
+#define ADDR_JUMPERS 0b111
+// CHIP_ADDR is the I2C address of the LS7866
+#define CHIP_ADDR LS7866_I2C_FIXED_ADDR + ADDR_JUMPERS
 
 #define BRD_INT_PIN 2 // INT0 is Pin2 , INT1 is Pin3
 #define CNTR_SIZE 4   // number of bytes to configure counters
 
-#define LED_OFF  0
-#define LED_RED  1
-#define LED_GRN  2
-
-#define LED_FLASH_INTERVAL  2000   // 2 Sec
-//#define LED_FLASH_INTERVAL  500   // .5 Sec
-#define LED_FLASH_ON_TIME   50     // 50mS
-
-const char fmtStartPromt[] = "APP LS7866-01 Ver %s\r\nI2C Master Address:%d Clock:%06ld\r\n";
+#define POLL_INTERVAL 1000
 
 /*
 const int ledPin1 = 8;
@@ -37,7 +34,6 @@ const int ledPin2 = 9;
 */
 
 char msgBuff[64];
-int I2cMstrAddr = 7;
 
 int LFlag = 0;
 int LFlagCntr = 0;
@@ -175,10 +171,9 @@ int LS7866_Write(byte slaveAddress, byte regAddr, byte value){
  * Output   none
  */
 
-void CounterSetup2(byte cntrId, byte slaveAddress, byte cntrSize){
-    byte mcr1CntrSize = MCR1_CNTR_4BYTE;
-    byte DataSet[] = {  MCR0_QUAD_X4 + MCR0_FREE_RUN + MCR0_DISABLE_Z + MCR0_Z_EDGE_FE,                // MCR0
-                        MCR1_CNTR_4BYTE + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD,                                                                       // MCR1 filled in below
+void ChipSetup(byte chipAddress, byte cntrSize){
+    byte DataSet[] = {  MCR0_QUAD_X1 + MCR0_FREE_RUN + MCR0_DISABLE_Z + MCR0_Z_EDGE_FE,                // MCR0
+                        MCR1_CNTR_4BYTE + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD,   // MCR1                                                                    // MCR1 filled in below
                         FCR_IDX ,                                                                    // FCR
                         0x00, 0x00, 0x08, 0x00,                                                     // IDR0
                         0x00, 0x00, 0x00, 0xFF,                                                     // IDR1
@@ -186,25 +181,33 @@ void CounterSetup2(byte cntrId, byte slaveAddress, byte cntrSize){
     byte numBytes = sizeof(DataSet)/sizeof(byte);
 
     // Set MCR1 Value in DataSet
+    byte mcr1CntrSize = MCR1_CNTR_4BYTE;
     switch(cntrSize){
       case 1: mcr1CntrSize =  MCR1_CNTR_1BYTE; break;
       case 2: mcr1CntrSize =  MCR1_CNTR_2BYTE; break;
       case 3: mcr1CntrSize =  MCR1_CNTR_3BYTE; break;
-      case 4:
-      default:
-              break;
     }
     DataSet[1] =  mcr1CntrSize + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD;
-    LS7866_Write(slaveAddress, TPR_ADDR, TPR_MRST);  
-    Wire.beginTransmission(slaveAddress);                       // transmit to device
+
+    // reset registers IDR0, IDR1, CNTR, ODR, DSTR, SSTR and LFLAG/ to default values
+    LS7866_Write(chipAddress, TPR_ADDR, TPR_MRST);  
+
+    // Write DataSet
+    Wire.beginTransmission(chipAddress);                       // transmit to device
     Wire.write(MCR0_ADDR | LS7866_REG_AUTO_INC);                // Add Auto Inc Bit to base Register Value
     for (byte i = 0; i<numBytes; i++) Wire.write(DataSet[i]);   // Load Wire buffer
     Wire.endTransmission();                                     // Send transmitting
 
-    sprintf(msgBuff, "Setup2 Counter %d at Addr:%02x Bytes:%d MCR0:%02x MCR1:%02x\r\n", cntrId, slaveAddress, numBytes, DataSet[0], DataSet[1]);
+    sprintf(msgBuff, "Setup Counter %d at Addr:%02x Bytes:%d MCR0:%02x MCR1:%02x\r\n", ADDR_JUMPERS, chipAddress, numBytes, DataSet[0], DataSet[1]);
     Serial.print(msgBuff);
-    
+
+    // read back MCR0 as a test
+    byte mcr0;
+    LS7866_Read(chipAddress, MCR0_ADDR, &mcr0);
+    sprintf(msgBuff, "MCR0 test: %02x\r\n", mcr0);  
+
 }
+
 int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
   int error = 0;
   unsigned long CntrVal = 0;
@@ -212,7 +215,7 @@ int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
   byte sstrVal = 0;
   byte sstrVal2 = 0;
    
-  LS7866_Read (DevAddr, ODR_ADDR, &CntrVal, cntrSize);  // Read ODR which load SSTR
+  LS7866_Read(DevAddr, ODR_ADDR, &CntrVal, cntrSize);  // Read ODR which load SSTR
   LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);            // Read SSTR
   
   if (sstrVal & (SSTR_EQL0 + SSTR_BW)){            // Check if this counter has Flags Set
@@ -225,7 +228,7 @@ int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
 }
 
 
-int CounterPoll(byte CntrId, byte DevAddr, byte cntrSize){
+int CounterPoll(byte DevAddr, byte cntrSize){
   int error = 0;
   unsigned long cntrVal = 0;
   unsigned long ValLong = 0;
@@ -235,7 +238,7 @@ int CounterPoll(byte CntrId, byte DevAddr, byte cntrSize){
   LS7866_Read(DevAddr, CNTR_ADDR, &cntrVal, cntrSize);
   LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);
   LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR  
-  sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %08lx SSTR: %02x\n",CntrId, DevAddr, cntrVal, sstrVal);
+  sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %08lx SSTR: %02x\n",ADDR_JUMPERS, DevAddr, cntrVal, sstrVal);
   Serial.print(msgBuff);
 
   // setLed(LED_OFF);
@@ -259,32 +262,22 @@ void setup() {
 
   // Setup Serial Monitor
   Serial.begin(9600);         // Setup serial monitor baud rate
-  sprintf(msgBuff, fmtStartPromt, PRM_VERSION, I2cMstrAddr, mstrClock);
+
+  delay(10000);                // Wait for Serial Monitor to start
+
+  sprintf(msgBuff, "Running program version %s", PRM_VERSION);
   Serial.print(msgBuff);
 
-  
-  
-  // Setup defined Counters
-  Serial.print("Setting up Counters.\r\n");
-#ifdef CNTR_0
-  CounterSetup2(0, LS7866_I2C_FIXED_ADDR + 0, CNTR_SIZE);
-#endif
-#ifdef CNTR_1
-  CounterSetup2(1, LS7866_I2C_FIXED_ADDR + 1, CNTR_SIZE);
-#endif
-#ifdef CNTR_2
-  CounterSetup2(2, LS7866_I2C_FIXED_ADDR + 2, CNTR_SIZE);
-#endif
-#ifdef CNTR_7
-  CounterSetup2(7, LS7866_I2C_FIXED_ADDR + 7, CNTR_SIZE);
-#endif
+  // Setup LS7866 registers
+  Serial.print("Setting up counter chip.\r\n");
+  ChipSetup(CHIP_ADDR, CNTR_SIZE);
   Serial.print("Setup complete.\r\n");
   Serial.print("Starting Device Polling.\r\n");
 
- 
   // setLed(LED_OFF);  
   // extend on time for led
-  tsPollingInterval = millis() + 500;
+  tsPollingInterval = millis() + POLL_INTERVAL;
+ 
   }
 
 void loop() {
@@ -292,21 +285,10 @@ void loop() {
   
   // Check for polling interval
   if (millis() > tsPollingInterval){
-    tsPollingInterval = millis() + LED_FLASH_INTERVAL;   // save next polling time stamp
+    tsPollingInterval = millis() + POLL_INTERVAL;   // save next polling time stamp
+ 
+    CounterPoll(CHIP_ADDR, CNTR_SIZE); 
 
-  // Poll defined counters
-#ifdef CNTR_0
-    CounterPoll(0, LS7866_I2C_FIXED_ADDR + 0, CNTR_SIZE); 
-#endif
-#ifdef CNTR_1    
-    CounterPoll(1, LS7866_I2C_FIXED_ADDR + 1, CNTR_SIZE); 
-#endif
-#ifdef CNTR_2     
-    CounterPoll(2, LS7866_I2C_FIXED_ADDR + 2, CNTR_SIZE); 
-#endif
-#ifdef CNTR_7     
-    CounterPoll(7, LS7866_I2C_FIXED_ADDR + 7, CNTR_SIZE); 
-#endif
   //Serial.print("\r\n");   // Add Break line
   }
 
