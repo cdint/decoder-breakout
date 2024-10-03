@@ -23,7 +23,7 @@ SYSTEM_THREAD(ENABLED);
 // View logs with CLI using 'particle serial monitor --follow'
 SerialLogHandler logHandler(LOG_LEVEL_INFO);
 
-#include <wire.h>
+#include <Wire.h>
 
 byte i;
 byte count;
