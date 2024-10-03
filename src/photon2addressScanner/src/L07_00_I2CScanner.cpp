@@ -23,18 +23,22 @@ SYSTEM_THREAD(ENABLED);
 // View logs with CLI using 'particle serial monitor --follow'
 SerialLogHandler logHandler(LOG_LEVEL_INFO);
 
-#include <wire.h>
+#include <Wire.h>
 
 byte i;
 byte count;
 
 void setup() {
   Serial.begin(9600);
-  while (!Serial);
-  count = 0;
-  Serial.printf("Beginning I2C Scan \n");
-
+  while (!Serial);  // Wait for Serial to be available
+  delay(3000); // Wait for Serial Monitor
+  Serial.printf("opening I2C communication \n");
   Wire.begin();
+  Serial.printf("Beginning I2C Scan \n");
+}
+
+void loop() {
+  count = 0;
   for(i=0;i<=127;i++){
     Wire.beginTransmission(i); //opens communication line to device "i"
     if(Wire.endTransmission()==0){ //closes communicaiton line and get back a number between 0 and 4. 0 means successfull. Not 0 is not successful
@@ -45,4 +49,3 @@ void setup() {
   }
   Serial.printf("Done. Found %i device(s). \n",count);
 }
-void loop() {}
