@@ -38,7 +38,7 @@ char msgBuff[64];
 int LFlag = 0;
 int LFlagCntr = 0;
 unsigned long mstrClock = 400000l;
-unsigned long tsPollingInterval = 0;
+unsigned long nextPollMillis = 0;
 
 
 /* 
@@ -277,7 +277,7 @@ void setup() {
 
   // setLed(LED_OFF);  
   // extend on time for led
-  tsPollingInterval = millis() + POLL_INTERVAL;
+  nextPollMillis = millis() + POLL_INTERVAL;
  
   }
 
@@ -285,8 +285,8 @@ void loop() {
   
   
   // Check for polling interval
-  if (millis() > tsPollingInterval){
-    tsPollingInterval = millis() + POLL_INTERVAL;   // save next polling time stamp
+  if (millis() > nextPollMillis){
+    nextPollMillis = millis() + POLL_INTERVAL;   // save next polling time stamp
  
     CounterPoll(CHIP_ADDR, CNTR_SIZE); 
 

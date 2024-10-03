@@ -18,6 +18,7 @@
 //==============================================================================
 // Constants
 
+// LS7866 high-order address bits are fixed at 0x70
 #define LS7866_I2C_FIXED_ADDR 0x70
 #define LS7866_REG_AUTO_INC   0x10
 
