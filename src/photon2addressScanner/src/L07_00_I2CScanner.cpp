@@ -39,13 +39,21 @@ void setup() {
 
 void loop() {
   count = 0;
-  for(i=0;i<=127;i++){
-    Wire.beginTransmission(i); //opens communication line to device "i"
-    if(Wire.endTransmission()==0){ //closes communicaiton line and get back a number between 0 and 4. 0 means successfull. Not 0 is not successful
-      Serial.printf("Found address: %i (0x%02X) \n",i,i); //X means print number as Hex. 02 accounts for number of places. "Found address: 42 (0x2A)"
+  // Loop through all likely I2C addresses (8-127).  
+  // We don't need to check 0-7 because those are reserved for special purposes.
+  // https://github.com/arduino/ArduinoCore-avr/issues/319
+  for(i=8;i<=127;i++){
+    // open communication line to device "i"
+    Wire.beginTransmission(i); 
+    // close communication line and get back a number between 0 and 4. 
+    // 0 means successful. Not 0 is not successful
+    if(Wire.endTransmission()==0) {
+      // X means print number as Hex. 02 accounts for number of places. "Found address: 42 (0x2A)"
+      Serial.printf("Found address: %i (0x%02X) \n",i,i); 
       count++;
-      delay(1);
     }
+    delay(1);
   }
   Serial.printf("Done. Found %i device(s). \n",count);
+  delay(5000);
 }
