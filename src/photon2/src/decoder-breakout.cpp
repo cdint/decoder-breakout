@@ -239,7 +239,7 @@ int CounterPoll(byte DevAddr, byte cntrSize){
   LS7866_Read(DevAddr, CNTR_ADDR, &cntrVal, cntrSize);
   LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);
   LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR  
-  sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %08lx SSTR: %02x\n",ADDR_JUMPERS, DevAddr, cntrVal, sstrVal);
+  sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %d (%08lx) SSTR: %02x\n",ADDR_JUMPERS, DevAddr, cntrVal, cntrVal, sstrVal);
   Serial.print(msgBuff);
 
   // setLed(LED_OFF);
@@ -258,13 +258,13 @@ void setup() {
   // Setup I2C Buss Master  
   // Wire.begin(I2cMstrAddr);    // Set my i2c slave address
   Wire.begin();    // Set i2c master mode
-  Wire.setClock(mstrClock);   // Set Buss Speed to Fast Mode 400K
+  // Wire.setClock(mstrClock);   // Set Buss Speed to Fast Mode 400K
   // Wire.setWireTimeout();      // Setup I2c Timeouts (default)
 
   // Setup Serial Monitor
   Serial.begin(9600);         // Setup serial monitor baud rate
 
-  delay(10000);                // Wait for Serial Monitor to start
+  delay(5000);                // Wait for Serial Monitor to start
 
   sprintf(msgBuff, "Running program version %s\r\n", PRM_VERSION);
   Serial.print(msgBuff);
