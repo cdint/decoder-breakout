@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/home/stevegt/lab/decoder-breakout/decoder-breakout/pcb/decoder-breakout.kicad_sch</source>
+    <date>Thu Nov  7 19:29:00 2024</date>
+    <tool>Eeschema 7.0.11-7.0.11~ubuntu22.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>decoder-breakout.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>1 uF</value>
+      <footprint>Capacitor_SMD:C_1812_4532Metric_Pad1.57x3.40mm_HandSolder</footprint>
+      <datasheet>CHV1812N250105MXT</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4fe210a3-18a1-43ac-bc2f-e8fac6b56c5b</tstamps>
+    </comp>
+    <comp ref="H1">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.5mm_Pad</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>20c9c14d-797b-48ef-a02c-61852deb42db</tstamps>
+    </comp>
+    <comp ref="H2">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.5mm_Pad</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>50bde4bb-d0e0-47b0-8f31-450bd55a83b0</tstamps>
+    </comp>
+    <comp ref="H3">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.5mm_Pad</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>99b5ab13-652a-4485-8bbc-17e5da31431f</tstamps>
+    </comp>
+    <comp ref="H4">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.5mm_Pad</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3282a7ad-d241-47c6-a3a9-0bfdadd8f0ed</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>SM04B-SRSS-TB_LF__SN_</value>
+      <footprint>SM04B-SRSS-TB(LF)(SN):JST_SM04B-SRSS-TB_LF__SN_</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=eda</field>
+        <field name="Description">
+Connector Header Surface Mount, Right Angle 4 position 0.039 (1.00mm)
+</field>
+        <field name="MANUFACTURER">JST</field>
+        <field name="MF">JST Sales</field>
+        <field name="MP">SM04B-SRSS-TB(LF)(SN)</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="STANDARD">Manufacturer recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="SM04B-SRSS-TB_LF__SN_" part="SM04B-SRSS-TB_LF__SN_" description=""/>
+      <property name="MF" value="JST Sales"/>
+      <property name="Description" value="&#xA;Connector Header Surface Mount, Right Angle 4 position 0.039 (1.00mm)&#xA;"/>
+      <property name="Package" value="None"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer recommendations"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=snap"/>
+      <property name="MP" value="SM04B-SRSS-TB(LF)(SN)"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="MANUFACTURER" value="JST"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c1781c7c-2240-4a86-9b22-2c74359db851</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>SM04B-SRSS-TB_LF__SN_</value>
+      <footprint>SM04B-SRSS-TB(LF)(SN):JST_SM04B-SRSS-TB_LF__SN_</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=eda</field>
+        <field name="Description">
+Connector Header Surface Mount, Right Angle 4 position 0.039 (1.00mm)
+</field>
+        <field name="MANUFACTURER">JST</field>
+        <field name="MF">JST Sales</field>
+        <field name="MP">SM04B-SRSS-TB(LF)(SN)</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="STANDARD">Manufacturer recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="SM04B-SRSS-TB_LF__SN_" part="SM04B-SRSS-TB_LF__SN_" description=""/>
+      <property name="MF" value="JST Sales"/>
+      <property name="Description" value="&#xA;Connector Header Surface Mount, Right Angle 4 position 0.039 (1.00mm)&#xA;"/>
+      <property name="Package" value="None"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer recommendations"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=snap"/>
+      <property name="MP" value="SM04B-SRSS-TB(LF)(SN)"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="MANUFACTURER" value="JST"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a76809a9-0399-430c-bda5-8c02c096fe6c</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>TBL009-254-08GY-2GY</value>
+      <footprint>TBL009-254-08GY-2GY:CUI_TBL009-254-08GY-2GY</footprint>
+      <fields>
+        <field name="MANUFACTURER">CUI</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+      </fields>
+      <libsource lib="TBL009-254-08GY-2GY" part="TBL009-254-08GY-2GY" description=""/>
+      <property name="MANUFACTURER" value="CUI"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>76955b19-db81-4252-b16a-c37b313324dd</tstamps>
+    </comp>
+    <comp ref="JP3">
+      <value>Jumper_2_Bridged</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <libsource lib="Jumper" part="Jumper_2_Bridged" description="Jumper, 2-pole, closed/bridged"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Jumper, 2-pole, closed/bridged"/>
+      <property name="ki_keywords" value="Jumper SPST"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>af7aca5d-d5fa-47d5-ae4a-4305176ba585</tstamps>
+    </comp>
+    <comp ref="JP4">
+      <value>Jumper_2_Bridged</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <libsource lib="Jumper" part="Jumper_2_Bridged" description="Jumper, 2-pole, closed/bridged"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Jumper, 2-pole, closed/bridged"/>
+      <property name="ki_keywords" value="Jumper SPST"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>77c53601-534c-4414-a092-879db71be487</tstamps>
+    </comp>
+    <comp ref="JP5">
+      <value>Jumper_2_Bridged</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <libsource lib="Jumper" part="Jumper_2_Bridged" description="Jumper, 2-pole, closed/bridged"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Jumper, 2-pole, closed/bridged"/>
+      <property name="ki_keywords" value="Jumper SPST"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2bd2ba61-a9ce-46d4-a5d2-c88df5dee2e5</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>BSS138</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</datasheet>
+      <libsource lib="" part="BSS138_1" description="50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"/>
+      <property name="ki_keywords" value="N-Channel MOSFET"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5794bc55-0523-4be5-9239-f267a9eecb5d</tstamps>
+    </comp>
+    <comp ref="Q2">
+      <value>BSS138</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</datasheet>
+      <libsource lib="Transistor_FET" part="BSS138" description="50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"/>
+      <property name="ki_keywords" value="N-Channel MOSFET"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>08773208-9be6-4d04-9c29-e0065bb7f44a</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>300</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>aa452773-fb8b-4b32-87c7-c8d783265624</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>300</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9a803aae-3b29-4313-ba03-e61e31d377cb</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>300</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5bfbe52c-cec7-483b-b4a2-61b75ed61744</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>300</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6356f15b-b466-46d4-92cc-3a0e94510e72</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>300</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>155c817b-6ff2-4604-90c9-72b78a484f00</tstamps>
+    </comp>
+    <comp ref="R6">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e6524e87-9b68-4a88-8323-d3f9d27da8b0</tstamps>
+    </comp>
+    <comp ref="R7">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e1e7a69d-046b-4ba4-bf2d-e49bfe08dc22</tstamps>
+    </comp>
+    <comp ref="R8">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0d706566-105b-483b-a365-f0da80db6f2c</tstamps>
+    </comp>
+    <comp ref="R9">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>80070975-390f-4b2b-98fb-7af8d123cbbd</tstamps>
+    </comp>
+    <comp ref="R10">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e7b566a5-7d10-4cf6-a45a-c548154003a5</tstamps>
+    </comp>
+    <comp ref="R11">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric_Pad1.40x2.65mm_HandSolder</footprint>
+      <libsource lib="Device" part="R_US" description="Resistor, US symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <property name="ki_description" value="Resistor, US symbol"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b02f2379-e307-4890-9d89-1a71f8829a54</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>LS7866-S</value>
+      <footprint>LS7866-S:SOIC127P600X175-14N</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/LS7866-S/LSI%252FCSI/view-part/?ref=eda</field>
+        <field name="Description">
+32-Bit I2C Quadrature Counter
+</field>
+        <field name="MANUFACTURER">LSI/CSI</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.75mm</field>
+        <field name="MF">LSI/CSI</field>
+        <field name="MP">LS7866-S</field>
+        <field name="PARTREV">June 2023</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="STANDARD">IPC-7351B</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/LS7866-S/LSI%252FCSI/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="LS7866-S" part="LS7866-S" description=""/>
+      <property name="MF" value="LSI/CSI"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="1.75mm"/>
+      <property name="Package" value="None"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/LS7866-S/LSI%252FCSI/view-part/?ref=eda"/>
+      <property name="STANDARD" value="IPC-7351B"/>
+      <property name="PARTREV" value="June 2023"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/LS7866-S/LSI%252FCSI/view-part/?ref=snap"/>
+      <property name="MP" value="LS7866-S"/>
+      <property name="Description" value="&#xA;32-Bit I2C Quadrature Counter&#xA;"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="MANUFACTURER" value="LSI/CSI"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="decoder-breakout.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3dfa9c4c-8e7c-4757-80ab-7d336015b34a</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="" part="BSS138_1">
+      <description>50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23</description>
+      <docs>https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">BSS138</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="D" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R_US">
+      <description>Resistor, US symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R_US</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Jumper" part="Jumper_2_Bridged">
+      <description>Jumper, 2-pole, closed/bridged</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Jumper*</fp>
+        <fp>TestPoint*2Pads*</fp>
+        <fp>TestPoint*Bridge*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">JP</field>
+        <field name="Value">Jumper_2_Bridged</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="B" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="LS7866-S" part="LS7866-S">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LS7866-S</field>
+        <field name="Footprint">LS7866-S:SOIC127P600X175-14N</field>
+        <field name="MF">LSI/CSI</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.75mm</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/LS7866-S/LSI%252FCSI/view-part/?ref=eda</field>
+        <field name="STANDARD">IPC-7351B</field>
+        <field name="PARTREV">June 2023</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/LS7866-S/LSI%252FCSI/view-part/?ref=snap</field>
+        <field name="MP">LS7866-S</field>
+        <field name="Description">
+32-Bit I2C Quadrature Counter
+</field>
+        <field name="Availability">In Stock</field>
+        <field name="MANUFACTURER">LSI/CSI</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="input"/>
+        <pin num="2" name="B" type="input"/>
+        <pin num="3" name="Z" type="input"/>
+        <pin num="4" name="CE" type="input"/>
+        <pin num="5" name="SCL" type="input"/>
+        <pin num="6" name="SDA" type="bidirectional"/>
+        <pin num="7" name="VSS" type="power_in"/>
+        <pin num="8" name="A0" type="input"/>
+        <pin num="9" name="A1" type="input"/>
+        <pin num="10" name="A2" type="input"/>
+        <pin num="11" name="NC" type="no_connect"/>
+        <pin num="12" name="~{LFLAG}" type="output"/>
+        <pin num="13" name="~{DFLAG}" type="output"/>
+        <pin num="14" name="VDD" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Mechanical" part="MountingHole">
+      <description>Mounting Hole without connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole</field>
+        <field name="Datasheet">~</field>
+      </fields>
+    </libpart>
+    <libpart lib="SM04B-SRSS-TB_LF__SN_" part="SM04B-SRSS-TB_LF__SN_">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">SM04B-SRSS-TB_LF__SN_</field>
+        <field name="Footprint">SM04B-SRSS-TB(LF)(SN):JST_SM04B-SRSS-TB_LF__SN_</field>
+        <field name="MF">JST Sales</field>
+        <field name="Description">
+Connector Header Surface Mount, Right Angle 4 position 0.039 (1.00mm)
+</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=eda</field>
+        <field name="STANDARD">Manufacturer recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/SM04B-SRSS-TB(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=snap</field>
+        <field name="MP">SM04B-SRSS-TB(LF)(SN)</field>
+        <field name="Availability">In Stock</field>
+        <field name="MANUFACTURER">JST</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+        <pin num="4" name="4" type="passive"/>
+        <pin num="S1" name="SHIELD" type="passive"/>
+        <pin num="S2" name="SHIELD" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="TBL009-254-08GY-2GY" part="TBL009-254-08GY-2GY">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">TBL009-254-08GY-2GY</field>
+        <field name="Footprint">TBL009-254-08GY-2GY:CUI_TBL009-254-08GY-2GY</field>
+        <field name="MANUFACTURER">CUI</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+      </fields>
+      <pins>
+        <pin num="1_A" name="1" type="passive"/>
+        <pin num="1_B" name="1__1" type="passive"/>
+        <pin num="2_A" name="2" type="passive"/>
+        <pin num="2_B" name="2__1" type="passive"/>
+        <pin num="3_A" name="3" type="passive"/>
+        <pin num="3_B" name="3__1" type="passive"/>
+        <pin num="4_A" name="4" type="passive"/>
+        <pin num="4_B" name="4__1" type="passive"/>
+        <pin num="5_A" name="5" type="passive"/>
+        <pin num="5_B" name="5__1" type="passive"/>
+        <pin num="6_A" name="6" type="passive"/>
+        <pin num="6_B" name="6__1" type="passive"/>
+        <pin num="7_A" name="7" type="passive"/>
+        <pin num="7_B" name="7__1" type="passive"/>
+        <pin num="8_A" name="8" type="passive"/>
+        <pin num="8_B" name="8__1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_FET" part="BSS138">
+      <description>50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23</description>
+      <docs>https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">BSS138</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="D" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Device">
+      <uri>/usr/share/kicad/symbols//Device.kicad_sym</uri>
+    </library>
+    <library logical="Jumper">
+      <uri>/usr/share/kicad/symbols//Jumper.kicad_sym</uri>
+    </library>
+    <library logical="LS7866-S">
+      <uri>/home/stevegt/lab/decoder-breakout/decoder-breakout/pcb/LS7866-S/LS7866-S.kicad_sym</uri>
+    </library>
+    <library logical="Mechanical">
+      <uri>/usr/share/kicad/symbols//Mechanical.kicad_sym</uri>
+    </library>
+    <library logical="SM04B-SRSS-TB_LF__SN_">
+      <uri>/home/stevegt/lab/decoder-breakout/decoder-breakout/pcb/SM04B-SRSS-TB(LF)(SN)/SM04B-SRSS-TB_LF__SN_.kicad_sym</uri>
+    </library>
+    <library logical="TBL009-254-08GY-2GY">
+      <uri>/home/stevegt/lab/decoder-breakout/decoder-breakout/pcb/TBL009-254-08GY-2GY/TBL009-254-08GY-2GY.kicad_sym</uri>
+    </library>
+    <library logical="Transistor_FET">
+      <uri>/usr/share/kicad/symbols//Transistor_FET.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+5v">
+      <node ref="J3" pin="1_A" pinfunction="1" pintype="passive"/>
+      <node ref="J3" pin="1_B" pinfunction="1__1" pintype="passive"/>
+      <node ref="J3" pin="6_A" pinfunction="6" pintype="passive"/>
+      <node ref="J3" pin="6_B" pinfunction="6__1" pintype="passive"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+      <node ref="R9" pin="1" pintype="passive"/>
+    </net>
+    <net code="2" name="A">
+      <node ref="Q1" pin="2" pinfunction="S" pintype="passive"/>
+      <node ref="R6" pin="2" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="A" pintype="input"/>
+    </net>
+    <net code="3" name="B">
+      <node ref="Q2" pin="2" pinfunction="S" pintype="passive"/>
+      <node ref="R8" pin="2" pintype="passive"/>
+      <node ref="U1" pin="2" pinfunction="B" pintype="input"/>
+    </net>
+    <net code="4" name="Encoder_A">
+      <node ref="J3" pin="4_A" pinfunction="4" pintype="passive"/>
+      <node ref="J3" pin="4_B" pinfunction="4__1" pintype="passive"/>
+      <node ref="Q1" pin="3" pinfunction="D" pintype="passive"/>
+      <node ref="R7" pin="2" pintype="passive"/>
+    </net>
+    <net code="5" name="Encoder_B">
+      <node ref="J3" pin="5_A" pinfunction="5" pintype="passive"/>
+      <node ref="J3" pin="5_B" pinfunction="5__1" pintype="passive"/>
+      <node ref="Q2" pin="3" pinfunction="D" pintype="passive"/>
+      <node ref="R9" pin="2" pintype="passive"/>
+    </net>
+    <net code="6" name="GND">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="J1" pin="S1" pinfunction="SHIELD" pintype="passive"/>
+      <node ref="J1" pin="S2" pinfunction="SHIELD" pintype="passive"/>
+      <node ref="J2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="J2" pin="S1" pinfunction="SHIELD" pintype="passive"/>
+      <node ref="J2" pin="S2" pinfunction="SHIELD" pintype="passive"/>
+      <node ref="J3" pin="2_A" pinfunction="2" pintype="passive"/>
+      <node ref="J3" pin="2_B" pinfunction="2__1" pintype="passive"/>
+      <node ref="J3" pin="7_A" pinfunction="7" pintype="passive"/>
+      <node ref="J3" pin="7_B" pinfunction="7__1" pintype="passive"/>
+      <node ref="JP3" pin="1" pinfunction="A" pintype="passive"/>
+      <node ref="JP4" pin="1" pinfunction="A" pintype="passive"/>
+      <node ref="JP5" pin="1" pinfunction="A" pintype="passive"/>
+      <node ref="U1" pin="7" pinfunction="VSS" pintype="power_in"/>
+    </net>
+    <net code="7" name="Net-(JP3-B)">
+      <node ref="JP3" pin="2" pinfunction="B" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+      <node ref="U1" pin="8" pinfunction="A0" pintype="input"/>
+    </net>
+    <net code="8" name="Net-(JP4-B)">
+      <node ref="JP4" pin="2" pinfunction="B" pintype="passive"/>
+      <node ref="R4" pin="1" pintype="passive"/>
+      <node ref="U1" pin="9" pinfunction="A1" pintype="input"/>
+    </net>
+    <net code="9" name="Net-(JP5-B)">
+      <node ref="JP5" pin="2" pinfunction="B" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
+      <node ref="U1" pin="10" pinfunction="A2" pintype="input"/>
+    </net>
+    <net code="10" name="Net-(U1-CE)">
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="CE" pintype="input"/>
+    </net>
+    <net code="11" name="Net-(U1-SCL)">
+      <node ref="J1" pin="4" pinfunction="4" pintype="passive"/>
+      <node ref="J2" pin="4" pinfunction="4" pintype="passive"/>
+      <node ref="R10" pin="2" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="SCL" pintype="input"/>
+    </net>
+    <net code="12" name="Net-(U1-SDA)">
+      <node ref="J1" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="J2" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="R11" pin="2" pintype="passive"/>
+      <node ref="U1" pin="6" pinfunction="SDA" pintype="bidirectional"/>
+    </net>
+    <net code="13" name="Net-(U1-Z)">
+      <node ref="R2" pin="1" pintype="passive"/>
+      <node ref="U1" pin="3" pinfunction="Z" pintype="input"/>
+    </net>
+    <net code="14" name="Shield">
+      <node ref="J3" pin="3_A" pinfunction="3" pintype="passive"/>
+      <node ref="J3" pin="3_B" pinfunction="3__1" pintype="passive"/>
+      <node ref="J3" pin="8_A" pinfunction="8" pintype="passive"/>
+      <node ref="J3" pin="8_B" pinfunction="8__1" pintype="passive"/>
+    </net>
+    <net code="15" name="VDD">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="J2" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="Q1" pin="1" pinfunction="G" pintype="input"/>
+      <node ref="Q2" pin="1" pinfunction="G" pintype="input"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+      <node ref="R10" pin="1" pintype="passive"/>
+      <node ref="R11" pin="1" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+      <node ref="R6" pin="1" pintype="passive"/>
+      <node ref="R8" pin="1" pintype="passive"/>
+      <node ref="U1" pin="14" pinfunction="VDD" pintype="power_in"/>
+    </net>
+    <net code="16" name="unconnected-(U1-NC-Pad11)">
+      <node ref="U1" pin="11" pinfunction="NC" pintype="no_connect"/>
+    </net>
+    <net code="17" name="unconnected-(U1-~{DFLAG}-Pad13)">
+      <node ref="U1" pin="13" pinfunction="~{DFLAG}" pintype="output+no_connect"/>
+    </net>
+    <net code="18" name="unconnected-(U1-~{LFLAG}-Pad12)">
+      <node ref="U1" pin="12" pinfunction="~{LFLAG}" pintype="output+no_connect"/>
+    </net>
+  </nets>
+</export>
