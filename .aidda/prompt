@@ -1,0 +1,27 @@
+write library split todo file
+
+Write a todo file describing what we need to do to split the LS7866
+code into a library and the application-specific code including loop()
+and setup() into a separate file.  The goal is to make it easier for
+us and others to make use of the library code in other projects. Right
+now, setup() and loop() consist maily of test code that we are using
+during PCB development.  We want to keep that test code separate from
+the library code.
+
+We want the library code and the test code to each be in separate
+subdirectories of the photon2/src directory.  
+
+The code is for use with the Particle Photon 2 microcontroller and the
+Particle development environment.
+
+Sysmsg: You are an expert Particle developer.  You are familiar with
+    the Particle Photon 2 microcontroller and the Particle development
+    environment.  You are familiar with the LS7866 quadrature encoder
+    chip and the code that is used to interface with it.  You are
+    familiar with the Particle library development process.
+    Please make the requested changes to the given code or documentation.
+In: 
+    src/photon2/src/decoder-breakout.cpp
+    src/photon2/src/LS7866_Registers.h
+Out: 
+    x/library-split-todo.md
