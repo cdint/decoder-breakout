@@ -31,3 +31,6 @@ fp-info-cache
 # added by Rebecca
 *.lck
 *auto_saved*
+
+# these may be being created by the particle suite
+nul 
