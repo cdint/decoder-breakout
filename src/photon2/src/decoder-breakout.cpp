@@ -1,74 +1,36 @@
-// This program will setup Counters 0 - 2 and then poll the counters every 2 sec
-// 
-// 
-// by Mark
+// Decoder Breakout Board library for Particle Photon 2
+// PCB 472-1 v0.3 cdint.com
 
-// Verison Histroy
-//  Ver   Date    Descriptsion
-//  1.00   9/13/23 
-#define PRM_VERSION "0.1"
+// keep the first and second version components synced with the board version
+#define PRM_VERSION "0.3.1"
 
 #include <Wire.h>
-#include "LS7866_Registers.h"     // Include LS7866 Register Def's
+#include "LS7866_Registers.h"     // Include LS7866 Register Def's for I2C Counter chip
 
-// Define which counters will be used
-//#define CNTR_0  0
-//#define CNTR_1  1
-//#define CNTR_2  2
-//#define CNTR_7  7
-
+// XXX application
 // ADDR_JUMPERS is the address set by the jumpers on the board
 #define ADDR_JUMPERS 0b111
 // CHIP_ADDR is the I2C address of the LS7866
+// XXX this should be calculated in ChipSetup in the library rather than being a constant
 #define CHIP_ADDR LS7866_I2C_FIXED_ADDR + ADDR_JUMPERS
 
-#define BRD_INT_PIN 2 // INT0 is Pin2 , INT1 is Pin3
+// XXX application
 #define CNTR_SIZE 4   // number of bytes to configure counters
 
+// XXX application
 #define POLL_INTERVAL 1000
 
-/*
-const int ledPin1 = 8;
-const int ledPin2 = 9;
-// const int SyncPin = 13;
-*/
-
+// XXX application
 char msgBuff[64];
 
+// XXX ???
 int LFlag = 0;
 int LFlagCntr = 0;
 unsigned long mstrClock = 400000l;
 unsigned long nextPollMillis = 0;
 
 
-/* 
- * Function setLed
- * Desc     configures drive currnt in TriColor LED
- * Input    Led Color State
- * Output   Led off, Led Green or Led Red
- */
-/*
-int setLed(int pState){
-  switch(pState){
-    default:
-    case LED_OFF:
-      digitalWrite(ledPin1, LOW);
-      digitalWrite(ledPin2, LOW);
-      break;
-    case LED_RED:
-      digitalWrite(ledPin1, HIGH);
-      digitalWrite(ledPin2, LOW);
-      break;
-    
-    case LED_GRN:
-      digitalWrite(ledPin1, LOW);
-      digitalWrite(ledPin2, HIGH);
-      break;
-  }
-  return pState;
-}
-*/
-
+// XXX library
 /* 
  * Function LS7866_Read
  * Desc     Overloaded function for reading unsigned long value from LS7866 Registers
@@ -103,7 +65,6 @@ void LS7866_Read(byte slaveAddress, byte regAddr, unsigned long *pbValue, byte n
  * Input    regAddr has address of LS7866 register to read from
  * Output   pbValue has register value
  */
-
 void LS7866_Read(byte slaveAddress, byte regAddr, byte *pbValue){
   
   // Write to Slave and set Register Addr we need to read from
@@ -209,6 +170,7 @@ void ChipSetup(byte chipAddress, byte cntrSize){
 
 }
 
+// XXX library
 int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
   int error = 0;
   unsigned long CntrVal = 0;
@@ -228,7 +190,7 @@ int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
   return error;
 }
 
-
+// XXX library
 int CounterPoll(byte DevAddr, byte cntrSize){
   int error = 0;
   unsigned long cntrVal = 0;
@@ -238,7 +200,7 @@ int CounterPoll(byte DevAddr, byte cntrSize){
 
   LS7866_Read(DevAddr, CNTR_ADDR, &cntrVal, cntrSize);
   LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);
-  LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR  
+  LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR  XXX why?  
   sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %d (%08lx) SSTR: %02x\n",ADDR_JUMPERS, DevAddr, cntrVal, cntrVal, sstrVal);
   Serial.print(msgBuff);
 
@@ -247,42 +209,35 @@ int CounterPoll(byte DevAddr, byte cntrSize){
 }
 
 void setup() {
-  // put your setup code here, to run once:
-  
-  // configure pins to drive Tri color led
-  // pinMode(ledPin1, OUTPUT);
-  // pinMode(ledPin2, OUTPUT);
 
-  // setLed(LED_RED);            // Show this board is Active
-  
+  // XXX this is all application 
+
   // Setup I2C Buss Master  
   // Wire.begin(I2cMstrAddr);    // Set my i2c slave address
   Wire.begin();    // Set i2c master mode
   // Wire.setClock(mstrClock);   // Set Buss Speed to Fast Mode 400K
   // Wire.setWireTimeout();      // Setup I2c Timeouts (default)
-
   // Setup Serial Monitor
   Serial.begin(9600);         // Setup serial monitor baud rate
-
-  delay(5000);                // Wait for Serial Monitor to start
+  delay(7000);                // Wait for Serial Monitor to start
 
   sprintf(msgBuff, "Running program version %s\r\n", PRM_VERSION);
   Serial.print(msgBuff);
-
   // Setup LS7866 registers
+
   Serial.print("Setting up counter chip.\r\n");
   ChipSetup(CHIP_ADDR, CNTR_SIZE);
+
   Serial.print("Setup complete.\r\n");
   Serial.print("Starting Device Polling.\r\n");
 
-  // setLed(LED_OFF);  
-  // extend on time for led
   nextPollMillis = millis() + POLL_INTERVAL;
  
   }
 
 void loop() {
   
+  // XXX application
   
   // Check for polling interval
   if (millis() > nextPollMillis){
