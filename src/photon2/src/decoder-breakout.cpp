@@ -2,7 +2,7 @@
 // PCB 472-1 v0.3 cdint.com
 
 // keep the first and second version components synced with the board version
-#define LIBRARY_VERSION "0.4.0"
+#define LIBRARY_VERSION "0.1.4"
 
 #include "Particle.h"
 #include <Wire.h>
