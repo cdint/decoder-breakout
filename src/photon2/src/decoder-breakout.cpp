@@ -2,24 +2,13 @@
 // PCB 472-1 v0.3 cdint.com
 
 // keep the first and second version components synced with the board version
-#define PRM_VERSION "0.3.1"
+#define LIBRARY_VERSION "0.4.0"
 
+#include "Particle.h"
 #include <Wire.h>
 #include "LS7866_Registers.h"     // Include LS7866 Register Def's for I2C Counter chip
+#include "decoder-breakout.h"
 
-// XXX application
-// ADDR_JUMPERS is the address set by the jumpers on the board
-#define ADDR_JUMPERS 0b111
-// CHIP_ADDR is the I2C address of the LS7866
-// XXX this should be calculated in ChipSetup in the library rather than being a constant
-#define CHIP_ADDR LS7866_I2C_FIXED_ADDR + ADDR_JUMPERS
-
-// XXX application
-#define CNTR_SIZE 4   // number of bytes to configure counters
-
-
-
-// XXX application
 char msgBuff[64];
 
 // XXX ???
@@ -131,7 +120,7 @@ int LS7866_Write(byte slaveAddress, byte regAddr, byte value){
  */
 
 // XXX this function is rather opaque and could use better comments or a rewrite
-void ChipSetup(byte chipAddress, byte cntrSize){
+void ChipSetup(byte addrJumpers, byte cntrSize){
     byte DataSet[] = {  MCR0_QUAD_X1 + MCR0_FREE_RUN + MCR0_DISABLE_Z + MCR0_Z_EDGE_FE,                // MCR0
                         MCR1_CNTR_4BYTE + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD,   // MCR1                                                                    // MCR1 filled in below
                         FCR_IDX ,                                                                    // FCR
@@ -149,6 +138,9 @@ void ChipSetup(byte chipAddress, byte cntrSize){
     }
     DataSet[1] =  mcr1CntrSize + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD;
 
+    // CHIP_ADDR is the I2C address of the LS7866
+    byte chipAddress = jumpers2chipAddr(addrJumpers);
+
     // reset registers IDR0, IDR1, CNTR, ODR, DSTR, SSTR and LFLAG/ to default values
     LS7866_Write(chipAddress, TPR_ADDR, TPR_MRST);  
 
@@ -158,7 +150,10 @@ void ChipSetup(byte chipAddress, byte cntrSize){
     for (byte i = 0; i<numBytes; i++) Wire.write(DataSet[i]);   // Load Wire buffer
     Wire.endTransmission();                                     // Send transmitting
 
-    sprintf(msgBuff, "Setup Counter %d at Addr:%02x Bytes:%d MCR0:%02x MCR1:%02x\r\n", ADDR_JUMPERS, chipAddress, numBytes, DataSet[0], DataSet[1]);
+    // XXX don't print stuff in the library
+    sprintf(msgBuff, "Running program version %s\r\n", LIBRARY_VERSION);
+    Serial.print(msgBuff);
+    sprintf(msgBuff, "Setup Counter %d at Addr:%02x Bytes:%d MCR0:%02x MCR1:%02x\r\n", addrJumpers, chipAddress, numBytes, DataSet[0], DataSet[1]);
     Serial.print(msgBuff);
 
     // read back MCR0 as a test
@@ -192,12 +187,13 @@ int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
 // XXX library
 // XXX we could return a struct that includes counter and SSTR values for the caller to use
 // XXX or we could move SSTR read to a different function
-unsigned long CounterPoll(byte DevAddr, byte cntrSize){
+unsigned long CounterPoll(byte addrJumpers, byte cntrSize){
   unsigned long cntrVal = 0;
   unsigned long ValLong = 0;
   byte sstrVal = 0;
   // setLed(LED_GRN);
 
+  byte DevAddr = jumpers2chipAddr(addrJumpers);
   LS7866_Read(DevAddr, CNTR_ADDR, &cntrVal, cntrSize);
   // LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);
   // LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR -- nope, we don't need this because MCR1 is set such that DSTR get transferred to SSTR on every read
@@ -208,74 +204,6 @@ unsigned long CounterPoll(byte DevAddr, byte cntrSize){
   return cntrVal;
 }
 
-// XXX application
-#define POLL_INTERVAL 200
-unsigned long nextPollMillis = 0;
-unsigned long prevCount = 0;
-
-void setup() {
-
-  // XXX this is all application 
-
-  // Take control of the RGB LED
-  RGB.control(true);
-
-  // Setup I2C Buss Master  
-  // Wire.begin(I2cMstrAddr);    // Set my i2c slave address
-  Wire.begin();    // Set i2c master mode
-  // Wire.setClock(mstrClock);   // Set Buss Speed to Fast Mode 400K
-  // Wire.setWireTimeout();      // Setup I2c Timeouts (default)
-  // Setup Serial Monitor
-  Serial.begin(9600);         // Setup serial monitor baud rate
-  delay(5000);                // Wait for Serial Monitor to start
-
-  sprintf(msgBuff, "Running program version %s\r\n", PRM_VERSION);
-  Serial.print(msgBuff);
-  // Setup LS7866 registers
-
-  Serial.print("Setting up counter chip.\r\n");
-  ChipSetup(CHIP_ADDR, CNTR_SIZE);
-
-  Serial.print("Setup complete.\r\n");
-  Serial.print("Starting Device Polling.\r\n");
-
-  nextPollMillis = millis() + POLL_INTERVAL;
- 
-  }
-
-
-void loop() {
-  
-  // XXX application
-
-  unsigned long count = 0;
-  bool verbose = true; // true to always print, false to only print when count changes
-  
-  // Check for polling interval
-  if (millis() > nextPollMillis){
-    nextPollMillis = millis() + POLL_INTERVAL;   // save next polling time stamp
-  
-    count = CounterPoll(CHIP_ADDR, CNTR_SIZE); 
-    if (count > prevCount){
-      // flash Photon 2 LED green
-      RGB.color(0, 255, 0);
-      verbose = true;
-    }
-    if (count < prevCount){
-      // flash Photon 2 LED red
-      RGB.color(255, 0, 0);
-      verbose = true;
-    }
-    if (count == prevCount){
-      // flash Photon 2 LED white
-      RGB.color(255, 255, 255);
-    }
-    if (verbose){
-      sprintf(msgBuff, "Counter %d: %08d\n", ADDR_JUMPERS, count);
-      Serial.print(msgBuff);
-    }
-    delay(POLL_INTERVAL/2);
-    RGB.color(0, 0, 0);
-    prevCount = count;
-  }
+byte jumpers2chipAddr(byte jumpers){
+  return LS7866_I2C_FIXED_ADDR + jumpers;
 }
