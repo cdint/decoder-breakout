@@ -130,6 +130,7 @@ int LS7866_Write(byte slaveAddress, byte regAddr, byte value){
  * Output   none
  */
 
+// XXX this function is rather opaque and could use better comments or a rewrite
 void ChipSetup(byte chipAddress, byte cntrSize){
     byte DataSet[] = {  MCR0_QUAD_X1 + MCR0_FREE_RUN + MCR0_DISABLE_Z + MCR0_Z_EDGE_FE,                // MCR0
                         MCR1_CNTR_4BYTE + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD,   // MCR1                                                                    // MCR1 filled in below
@@ -199,7 +200,7 @@ unsigned long CounterPoll(byte DevAddr, byte cntrSize){
 
   LS7866_Read(DevAddr, CNTR_ADDR, &cntrVal, cntrSize);
   // LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);
-  LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR  XXX why?  
+  // LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR -- nope, we don't need this because MCR1 is set such that DSTR get transferred to SSTR on every read
   // sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %d (%08lx) SSTR: %02x\n",ADDR_JUMPERS, DevAddr, cntrVal, cntrVal, sstrVal);
   // Serial.print(msgBuff);
 
