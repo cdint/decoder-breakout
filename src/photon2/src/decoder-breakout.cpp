@@ -17,8 +17,7 @@
 // XXX application
 #define CNTR_SIZE 4   // number of bytes to configure counters
 
-// XXX application
-#define POLL_INTERVAL 1000
+
 
 // XXX application
 char msgBuff[64];
@@ -27,7 +26,6 @@ char msgBuff[64];
 int LFlag = 0;
 int LFlagCntr = 0;
 unsigned long mstrClock = 400000l;
-unsigned long nextPollMillis = 0;
 
 
 // XXX library
@@ -191,26 +189,35 @@ int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
 }
 
 // XXX library
-int CounterPoll(byte DevAddr, byte cntrSize){
-  int error = 0;
+// XXX we could return a struct that includes counter and SSTR values for the caller to use
+// XXX or we could move SSTR read to a different function
+unsigned long CounterPoll(byte DevAddr, byte cntrSize){
   unsigned long cntrVal = 0;
   unsigned long ValLong = 0;
   byte sstrVal = 0;
   // setLed(LED_GRN);
 
   LS7866_Read(DevAddr, CNTR_ADDR, &cntrVal, cntrSize);
-  LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);
+  // LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);
   LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR  XXX why?  
-  sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %d (%08lx) SSTR: %02x\n",ADDR_JUMPERS, DevAddr, cntrVal, cntrVal, sstrVal);
-  Serial.print(msgBuff);
+  // sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %d (%08lx) SSTR: %02x\n",ADDR_JUMPERS, DevAddr, cntrVal, cntrVal, sstrVal);
+  // Serial.print(msgBuff);
 
   // setLed(LED_OFF);
-  return error;
+  return cntrVal;
 }
+
+// XXX application
+#define POLL_INTERVAL 200
+unsigned long nextPollMillis = 0;
+unsigned long prevCount = 0;
 
 void setup() {
 
   // XXX this is all application 
+
+  // Take control of the RGB LED
+  RGB.control(true);
 
   // Setup I2C Buss Master  
   // Wire.begin(I2cMstrAddr);    // Set my i2c slave address
@@ -219,7 +226,7 @@ void setup() {
   // Wire.setWireTimeout();      // Setup I2c Timeouts (default)
   // Setup Serial Monitor
   Serial.begin(9600);         // Setup serial monitor baud rate
-  delay(7000);                // Wait for Serial Monitor to start
+  delay(5000);                // Wait for Serial Monitor to start
 
   sprintf(msgBuff, "Running program version %s\r\n", PRM_VERSION);
   Serial.print(msgBuff);
@@ -235,17 +242,39 @@ void setup() {
  
   }
 
+
 void loop() {
   
   // XXX application
+
+  unsigned long count = 0;
+  bool verbose = true; // true to always print, false to only print when count changes
   
   // Check for polling interval
   if (millis() > nextPollMillis){
     nextPollMillis = millis() + POLL_INTERVAL;   // save next polling time stamp
- 
-    CounterPoll(CHIP_ADDR, CNTR_SIZE); 
-
-  //Serial.print("\r\n");   // Add Break line
+  
+    count = CounterPoll(CHIP_ADDR, CNTR_SIZE); 
+    if (count > prevCount){
+      // flash Photon 2 LED green
+      RGB.color(0, 255, 0);
+      verbose = true;
+    }
+    if (count < prevCount){
+      // flash Photon 2 LED red
+      RGB.color(255, 0, 0);
+      verbose = true;
+    }
+    if (count == prevCount){
+      // flash Photon 2 LED white
+      RGB.color(255, 255, 255);
+    }
+    if (verbose){
+      sprintf(msgBuff, "Counter %d: %08d\n", ADDR_JUMPERS, count);
+      Serial.print(msgBuff);
+    }
+    delay(POLL_INTERVAL/2);
+    RGB.color(0, 0, 0);
+    prevCount = count;
   }
-
 }
