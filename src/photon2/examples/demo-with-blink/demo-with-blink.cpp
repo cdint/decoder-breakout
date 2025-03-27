@@ -18,22 +18,25 @@ char msg2Buff[64];
 
 void setup() {
 
-  // XXX this is all application 
-
   // Take control of the RGB LED
   RGB.control(true);
 
   // Setup I2C Buss Master  
-  // Wire.begin(I2cMstrAddr);    // Set my i2c slave address
   Wire.begin();    // Set i2c master mode
-  // Wire.setClock(mstrClock);   // Set Buss Speed to Fast Mode 400K
-  // Wire.setWireTimeout();      // Setup I2c Timeouts (default)
+  
+  // Set Buss Speed to Fast Mode 400KHz
+  // unsigned long mstrClock = 400000l;
+  // Wire.setClock(mstrClock);    // this might be Arduino
+  // Particle might instead use Wire.setSpeed(CLOCK_SPEED_400KHZ);
+
+  // Setup I2c Timeouts (default)
+  // Wire.setWireTimeout();    
+
   // Setup Serial Monitor
   Serial.begin(9600);         // Setup serial monitor baud rate
   delay(5000);                // Wait for Serial Monitor to start
 
   // Setup LS7866 registers
-
   Serial.print("Setting up counter chip.\r\n");
   ChipSetup(ADDR_JUMPERS, CNTR_SIZE);
 

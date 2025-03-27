@@ -2,22 +2,18 @@
 // PCB 472-1 v0.3 cdint.com
 
 // keep the first and second version components synced with the board version
-#define LIBRARY_VERSION "0.1.4"
+#define LIBRARY_VERSION "0.1.5"
 
 #include "Particle.h"
 #include <Wire.h>
 #include "LS7866_Registers.h"     // Include LS7866 Register Def's for I2C Counter chip
 #include "decoder-breakout.h"
 
-char msgBuff[64];
+// XXX refactor this entire file to use a class instead of global variables and functions
 
-// XXX ???
-int LFlag = 0;
-int LFlagCntr = 0;
-unsigned long mstrClock = 400000l;
+// XXX get rid of msgBuff in the library -- instead return values to the caller and let it do the printing
+char msgBuff[99];
 
-
-// XXX library
 /* 
  * Function LS7866_Read
  * Desc     Overloaded function for reading unsigned long value from LS7866 Registers
@@ -117,9 +113,6 @@ int LS7866_Write(byte slaveAddress, byte regAddr, byte value){
   return error;
 }
 
-
-
-
 /* 
  * Function CounterSetup2
  * Desc     Configures counter
@@ -174,9 +167,13 @@ void ChipSetup(byte addrJumpers, byte cntrSize){
 
 }
 
-// XXX library
+// CounterCheck is used to check if the counter has Flags Set.  
+// The Flags are set when the counter has reached the value set in the SSTR register.
+// It reset DSTR and returns a nonzero int if the counter has Flags Set.
+// XXX review for functionality -- what sets flags?
+// XXX should return sstrVal and cntrVal to the caller instead of printing them
 int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
-  int error = 0;
+  int reset = 0;
   unsigned long CntrVal = 0;
   unsigned long ValLong = 0;
   byte sstrVal = 0;
@@ -186,15 +183,15 @@ int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
   LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);            // Read SSTR
   
   if (sstrVal & (SSTR_EQL0 + SSTR_BW)){            // Check if this counter has Flags Set
-        LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR  
-        sprintf(msgBuff, "LFlagCntr:%d Cntr:%d was %08lx SSTR:%02x BW:%d EQU0:%d\n",LFlagCntr, CntrId, CntrVal, sstrVal, (sstrVal & SSTR_BW), (sstrVal & SSTR_EQL0));
+        LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR 
+        reset = 1;  
+        sprintf(msgBuff, "Cntr:%d was %08lx SSTR:%02x BW:%d EQU0:%d\n", CntrId, CntrVal, sstrVal, (sstrVal & SSTR_BW), (sstrVal & SSTR_EQL0));
         Serial.print(msgBuff);
   }
    
-  return error;
+  return reset;
 }
 
-// XXX library
 // XXX we could return a struct that includes counter and SSTR values for the caller to use
 // XXX or we could move SSTR read to a different function
 unsigned long CounterPoll(byte addrJumpers, byte cntrSize){
