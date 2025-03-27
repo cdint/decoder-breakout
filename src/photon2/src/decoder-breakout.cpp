@@ -1,18 +1,16 @@
 // Decoder Breakout Board library for Particle Photon 2
 // PCB 472-1 v0.3 cdint.com
 
-// keep the first and second version components synced with the board version
-#define LIBRARY_VERSION "0.1.5"
 
 #include "Particle.h"
 #include <Wire.h>
 #include "LS7866_Registers.h"     // Include LS7866 Register Def's for I2C Counter chip
 #include "decoder-breakout.h"
 
-// XXX refactor this entire file to use a class instead of global variables and functions
 
-// XXX get rid of msgBuff in the library -- instead return values to the caller and let it do the printing
-char msgBuff[99];
+byte jumpers2chipAddr(byte jumpers){
+  return LS7866_I2C_FIXED_ADDR + jumpers;
+}
 
 /* 
  * Function LS7866_Read
@@ -82,7 +80,6 @@ void LS7866_Read(byte slaveAddress, byte regAddr, byte *pbValue){
  * Input    numBytes has number of bytes to write
  * Output   Value has register value
  */
-
 int LS7866_Write(byte slaveAddress, byte regAddr, unsigned long value, byte numBytes){
   int error = 0;
   byte * valPtr = (byte*)&value + (numBytes - 1);
@@ -113,80 +110,90 @@ int LS7866_Write(byte slaveAddress, byte regAddr, byte value){
   return error;
 }
 
-/* 
- * Function CounterSetup2
- * Desc     Configures counter
- * Input    cntrId identifies each counter on pcb
- * Input    slaveAddress has I2C slave address for LS7866 Counter
- * Input    cntrSize has number of bytes IDRx, CNTR, ODR are configured.
- * Output   none
- */
+// Constructor
+DecoderBreakout::DecoderBreakout(byte addrJumpers, byte cntrSize){
+    _addrJumpers = addrJumpers;
+    _chipAddress = jumpers2chipAddr(addrJumpers);
+    _cntrSize = cntrSize;
+}
 
-// XXX this function is rather opaque and could use better comments or a rewrite
-void ChipSetup(byte addrJumpers, byte cntrSize){
-    byte DataSet[] = {  MCR0_QUAD_X1 + MCR0_FREE_RUN + MCR0_DISABLE_Z + MCR0_Z_EDGE_FE,                // MCR0
-                        MCR1_CNTR_4BYTE + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD,   // MCR1                                                                    // MCR1 filled in below
-                        FCR_IDX ,                                                                    // FCR
-                        0x00, 0x00, 0x08, 0x00,                                                     // IDR0
-                        0x00, 0x00, 0x00, 0xFF,                                                     // IDR1
-                        TPR_RDST};                                                                  // TPR
-    byte numBytes = sizeof(DataSet)/sizeof(byte);
+/* 
+ * Function ChipSetup
+ * Desc     Configures counter chip
+ * Output   true if successful
+ */
+bool DecoderBreakout::ChipSetup(){
+    _DataSet[0] = MCR0_QUAD_X1 + MCR0_FREE_RUN + MCR0_DISABLE_Z + MCR0_Z_EDGE_FE; // MCR0
+    _DataSet[1] = MCR1_CNTR_4BYTE + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD; // MCR1
+    _DataSet[2] = FCR_IDX; // FCR
+    // IDR0
+    _DataSet[3] = 0x00;
+    _DataSet[4] = 0x00;
+    _DataSet[5] = 0x08;
+    _DataSet[6] = 0x00;
+    // IDR1
+    _DataSet[7] = 0x00;
+    _DataSet[8] = 0x00;
+    _DataSet[9] = 0x00;
+    _DataSet[10] = 0xFF;
+    // TPR
+    _DataSet[11] = TPR_RDST;
+    // XXX why is this not always 12?
+    byte numBytes = sizeof(_DataSet)/sizeof(byte);
 
     // Set MCR1 Value in DataSet
     byte mcr1CntrSize = MCR1_CNTR_4BYTE;
-    switch(cntrSize){
+    switch(_cntrSize){
       case 1: mcr1CntrSize =  MCR1_CNTR_1BYTE; break;
       case 2: mcr1CntrSize =  MCR1_CNTR_2BYTE; break;
       case 3: mcr1CntrSize =  MCR1_CNTR_3BYTE; break;
     }
-    DataSet[1] =  mcr1CntrSize + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD;
-
-    // CHIP_ADDR is the I2C address of the LS7866
-    byte chipAddress = jumpers2chipAddr(addrJumpers);
+    _DataSet[1] =  mcr1CntrSize + MCR1_COUNT_ENABLE + MCR1_nCLR_DSTR_ON_RD + MCR1_SSTR_ON_RD;
 
     // reset registers IDR0, IDR1, CNTR, ODR, DSTR, SSTR and LFLAG/ to default values
-    LS7866_Write(chipAddress, TPR_ADDR, TPR_MRST);  
+    LS7866_Write(_chipAddress, TPR_ADDR, TPR_MRST);  
 
     // Write DataSet
-    Wire.beginTransmission(chipAddress);                       // transmit to device
+    Wire.beginTransmission(_chipAddress);                       // transmit to device
     Wire.write(MCR0_ADDR | LS7866_REG_AUTO_INC);                // Add Auto Inc Bit to base Register Value
-    for (byte i = 0; i<numBytes; i++) Wire.write(DataSet[i]);   // Load Wire buffer
+    for (byte i = 0; i<numBytes; i++) Wire.write(_DataSet[i]);   // Load Wire buffer
     Wire.endTransmission();                                     // Send transmitting
-
-    // XXX don't print stuff in the library
-    sprintf(msgBuff, "Running program version %s\r\n", LIBRARY_VERSION);
-    Serial.print(msgBuff);
-    sprintf(msgBuff, "Setup Counter %d at Addr:%02x Bytes:%d MCR0:%02x MCR1:%02x\r\n", addrJumpers, chipAddress, numBytes, DataSet[0], DataSet[1]);
-    Serial.print(msgBuff);
 
     // read back MCR0 as a test
     byte mcr0;
-    LS7866_Read(chipAddress, MCR0_ADDR, &mcr0);
-    sprintf(msgBuff, "MCR0 test: %02x\r\n", mcr0);  
-    Serial.print(msgBuff);
-
+    LS7866_Read(_chipAddress, MCR0_ADDR, &mcr0);
+    if (mcr0 != _DataSet[0]){
+      // set _MCR0 to the value that was read back
+      _DataSet[0] = mcr0;
+      return false;
+    }
+    return true;
 }
+
 
 // CounterCheck is used to check if the counter has Flags Set.  
 // The Flags are set when the counter has reached the value set in the SSTR register.
 // It reset DSTR and returns a nonzero int if the counter has Flags Set.
 // XXX review for functionality -- what sets flags?
 // XXX should return sstrVal and cntrVal to the caller instead of printing them
-int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
+int DecoderBreakout::CounterCheck(){
   int reset = 0;
   unsigned long CntrVal = 0;
   unsigned long ValLong = 0;
   byte sstrVal = 0;
   byte sstrVal2 = 0;
-   
+  
+  byte DevAddr = _chipAddress;
+  byte cntrSize = _cntrSize;
   LS7866_Read(DevAddr, ODR_ADDR, &CntrVal, cntrSize);  // Read ODR which load SSTR
   LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);            // Read SSTR
   
   if (sstrVal & (SSTR_EQL0 + SSTR_BW)){            // Check if this counter has Flags Set
         LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR 
         reset = 1;  
-        sprintf(msgBuff, "Cntr:%d was %08lx SSTR:%02x BW:%d EQU0:%d\n", CntrId, CntrVal, sstrVal, (sstrVal & SSTR_BW), (sstrVal & SSTR_EQL0));
-        Serial.print(msgBuff);
+        // XXX
+        // sprintf(msgBuff, "Cntr:%d was %08lx SSTR:%02x BW:%d EQU0:%d\n", CntrId, CntrVal, sstrVal, (sstrVal & SSTR_BW), (sstrVal & SSTR_EQL0));
+        // Serial.print(msgBuff);
   }
    
   return reset;
@@ -194,13 +201,14 @@ int CounterCheck(byte CntrId, byte DevAddr, byte cntrSize){
 
 // XXX we could return a struct that includes counter and SSTR values for the caller to use
 // XXX or we could move SSTR read to a different function
-unsigned long CounterPoll(byte addrJumpers, byte cntrSize){
+unsigned long DecoderBreakout::CounterPoll(){
   unsigned long cntrVal = 0;
   unsigned long ValLong = 0;
   byte sstrVal = 0;
   // setLed(LED_GRN);
 
-  byte DevAddr = jumpers2chipAddr(addrJumpers);
+  byte DevAddr = _chipAddress;
+  byte cntrSize = _cntrSize;
   LS7866_Read(DevAddr, CNTR_ADDR, &cntrVal, cntrSize);
   // LS7866_Read(DevAddr, SSTR_ADDR, &sstrVal);
   // LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR -- nope, we don't need this because MCR1 is set such that DSTR get transferred to SSTR on every read
@@ -209,8 +217,4 @@ unsigned long CounterPoll(byte addrJumpers, byte cntrSize){
 
   // setLed(LED_OFF);
   return cntrVal;
-}
-
-byte jumpers2chipAddr(byte jumpers){
-  return LS7866_I2C_FIXED_ADDR + jumpers;
 }
