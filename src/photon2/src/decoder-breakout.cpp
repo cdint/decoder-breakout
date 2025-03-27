@@ -36,9 +36,19 @@ void LS7866_Read(byte slaveAddress, byte regAddr, unsigned long *pbValue, byte n
   Wire.endTransmission(0);                // Send Transmission do not send Stop
   
   // Send read Request to Slave
-  Wire.requestFrom((int)slaveAddress, (int)numBytes, true); // Request from Slave NumBytes and terminate with Stop
+  // Request from Slave NumBytes and terminate with Stop
+  Wire.requestFrom((int)slaveAddress, (int)numBytes, true); 
   // Read data out of Wire Buffer
   // Data is read from device in Msb to Lsb format
+  // XXX buffer overrun possible at the beginning of the value section in RAM 
+  // - right now we ask for numBytes from the i2c devices, and then we trust that
+  //   the device is only sending us that many bytes.  If the device sends more bytes
+  //   than we asked for, we will overwrite memory that we don't own.  This is a security
+  //   and reliability issue.  We should check the number of bytes read from the i2c device
+  //   and make sure it is the same as the number of bytes we asked for.  If it is not, we
+  //   should return an error code and not trust the data that was read from the i2c device.
+  // - XXX also, is it a valid read if bytes read < numBytes?  Should the while loop instead
+  //   be `for (byte i = 0; i < numBytes; i++)`?
   while(Wire.available()) *valPtr-- = (byte)Wire.read();    // load memory with data
   
   // Passback Value
