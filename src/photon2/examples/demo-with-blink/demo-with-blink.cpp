@@ -25,7 +25,7 @@ void setup() {
     // Setup I2C Buss Master  
     Wire.begin();    // Set i2c master mode
 
-    // Set Buss Speed to Fast Mode 400KHz
+    // Set Bus Speed to Fast Mode 400KHz
     // unsigned long mstrClock = 400000l;
     // Wire.setClock(mstrClock);    // this might be Arduino
     // Particle might instead use Wire.setSpeed(CLOCK_SPEED_400KHZ);
@@ -67,8 +67,8 @@ void loop() {
   bool verbose = true; // true to always print, false to only print when count changes
   
   // Check for polling interval
-  if (millis() > nextPollMillis){
-    nextPollMillis = millis() + POLL_INTERVAL;   // save next polling time stamp
+  //  if (millis() > nextPollMillis){
+  //  nextPollMillis = millis() + POLL_INTERVAL;   // save next polling time stamp
   
     count = chip.CounterPoll(); 
     if (count > prevCount){
@@ -86,11 +86,13 @@ void loop() {
       RGB.color(255, 255, 255);
     }
     if (verbose){
-      sprintf(msgBuff, "Counter %d: %08d\n", ADDR_JUMPERS, count);
+      sprintf(msgBuff, "Counter %d: %08d millis %d nextPollMillis %d\n", ADDR_JUMPERS, count, millis(), nextPollMillis);
       Serial.print(msgBuff);
     }
     delay(POLL_INTERVAL/2);
     RGB.color(0, 0, 0);
     prevCount = count;
-  }
+
+    Particle.process();  // Maintain cloud connection
+    delay(POLL_INTERVAL/2);
 }

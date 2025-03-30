@@ -43,7 +43,11 @@ void LS7866_Read(byte slaveAddress, byte regAddr, unsigned long *pbValue, byte n
   //   should return an error code and not trust the data that was read from the i2c device.
   // - XXX also, is it a valid read if bytes read < numBytes?  Should the while loop instead
   //   be `for (byte i = 0; i < numBytes; i++)`?
-  while(Wire.available()) *valPtr-- = (byte)Wire.read();    // load memory with data
+  while(Wire.available()) {
+    Serial.print(".");
+    *valPtr-- = (byte)Wire.read();    // load memory with data
+  }
+  Serial.print("\n");
   
   // Passback Value
   *pbValue = value;
@@ -214,7 +218,6 @@ unsigned long DecoderBreakout::CounterPoll(){
   // LS7866_Write(DevAddr, TPR_ADDR, TPR_RDST);       // Reset DSTR -- nope, we don't need this because MCR1 is set such that DSTR get transferred to SSTR on every read
   // sprintf(msgBuff, "Polled Cntr:%d Addr:%02x CNTR: %d (%08lx) SSTR: %02x\n",ADDR_JUMPERS, DevAddr, cntrVal, cntrVal, sstrVal);
   // Serial.print(msgBuff);
-
-  // setLed(LED_OFF);
+  Serial.print("_");
   return cntrVal;
 }
