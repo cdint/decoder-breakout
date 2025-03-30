@@ -23,11 +23,18 @@ byte jumpers2chipAddr(byte jumpers){
 void LS7866_Read(byte slaveAddress, byte regAddr, unsigned long *pbValue, byte numBytes){
   unsigned long value = 0;
   byte * valPtr = (byte *)&value + numBytes-1;  // configure byte pointer to MSB position 
-  
+
+  // number of bytes actually received
+  byte bytesReceived = 0;
+
   // Write to Slave and set Register Addr we need to read from
   Wire.beginTransmission(slaveAddress);   // transmit to device
   Wire.write(regAddr);                    // Set Addr of Data we want
-  Wire.endTransmission(0);                // Send Transmission do not send Stop
+  byte err = Wire.endTransmission(0);                // Send Transmission do not send Stop
+  if (err != 0) {
+    Serial.printf("error writing to slave %d\n", slaveAddress);
+    return;
+  }
   
   // Send read Request to Slave
   // Request from Slave NumBytes and terminate with Stop
@@ -43,13 +50,22 @@ void LS7866_Read(byte slaveAddress, byte regAddr, unsigned long *pbValue, byte n
   //   should return an error code and not trust the data that was read from the i2c device.
   // - XXX also, is it a valid read if bytes read < numBytes?  Should the while loop instead
   //   be `for (byte i = 0; i < numBytes; i++)`?
-  while(Wire.available()) {
+  
+  while (Wire.available()) {
+    if (bytesReceived >= numBytes) {
+      Serial.printf("buffer overrun: want %d bytes, got %d\n", numBytes, bytesReceived);
+      break;
+    }
     Serial.print(".");
     *valPtr-- = (byte)Wire.read();    // load memory with data
+    bytesReceived++;
   }
-  Serial.print("\n");
   
-  // Passback Value
+  if (bytesReceived < numBytes) {
+    Serial.printf("buffer underrun: want %d bytes, got %d\n", numBytes, bytesReceived);
+  }
+
+  // Pass back Value
   *pbValue = value;
 }
 

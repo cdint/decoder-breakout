@@ -1,18 +1,18 @@
 
 #include <decoder-breakout.h>
 
+// enable system background thread
+SYSTEM_THREAD(ENABLED); 
+
 #define POLL_INTERVAL 200
-unsigned long nextPollMillis = 0;
+// unsigned long nextPollMillis = 0;
 unsigned long prevCount = 0;
 
-// XXX redundant with msgbuff
-char msgBuff[64];
+char msgBuff[128];
 
-// XXX application
 // ADDR_JUMPERS is the address set by the jumpers on the board
 #define ADDR_JUMPERS 0b111
 
-// XXX application
 #define CNTR_SIZE 4   // number of bytes to configure counters
 
 DecoderBreakout chip(ADDR_JUMPERS, CNTR_SIZE);
@@ -56,7 +56,7 @@ void setup() {
     Serial.print("Setup complete.\r\n");
     Serial.print("Starting Device Polling.\r\n");
 
-    nextPollMillis = millis() + POLL_INTERVAL;
+    // nextPollMillis = millis() + POLL_INTERVAL;
  
 }
 
@@ -86,7 +86,8 @@ void loop() {
       RGB.color(255, 255, 255);
     }
     if (verbose){
-      sprintf(msgBuff, "Counter %d: %08d millis %d nextPollMillis %d\n", ADDR_JUMPERS, count, millis(), nextPollMillis);
+      // sprintf(msgBuff, "Counter %d: %08d millis %d nextPollMillis %d\n", ADDR_JUMPERS, count, millis(), nextPollMillis);
+      sprintf(msgBuff, "Counter %d: %08d\n", ADDR_JUMPERS, count);
       Serial.print(msgBuff);
     }
     delay(POLL_INTERVAL/2);

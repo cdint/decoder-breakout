@@ -6,9 +6,6 @@
 
 #include "Particle.h"
 
-// enable system background thread
-SYSTEM_THREAD(ENABLED); 
-
 // DecoderBreakout models the LS7366R Quadrature Counter chip from LSI Logic
 class DecoderBreakout {
 public:
